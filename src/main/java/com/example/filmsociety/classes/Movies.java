@@ -28,5 +28,45 @@ public class Movies {
     @ManyToMany(mappedBy = "movies")
     private Set<Actor> actors = new HashSet<>();
 
+    public Movies() {}
+
+    public Movies(String title, int releaseYear, int duration) {
+        this.title = title;
+        this.releaseYear = releaseYear;
+        this.duration = duration;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return title;
+    }
+
+    public void setName(String title) {
+        this.title = title;
+    }
+
+    public int getReleaseYear() {
+        return releaseYear;
+    }
+
+    public void setReleaseYear(int releaseYear) {
+        this.releaseYear = releaseYear;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
 
 }
