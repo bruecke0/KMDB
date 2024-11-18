@@ -3,7 +3,7 @@ package com.example.filmsociety.services;
 import java.util.List;
 import java.util.Optional;
 
-import com.example.filmsociety.classes.Actor;
+import com.example.filmsociety.entities.Actor;
 
 public interface ActorService {
     Actor createActor (Actor actor);

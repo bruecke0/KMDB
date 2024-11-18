@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.example.filmsociety.classes.Genre;
+import com.example.filmsociety.entities.Genre;
 import com.example.filmsociety.repositories.GenreRepository;
 import com.example.filmsociety.services.GenreService;
 

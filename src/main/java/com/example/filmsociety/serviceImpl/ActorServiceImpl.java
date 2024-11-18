@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.example.filmsociety.classes.Actor;
+import com.example.filmsociety.entities.Actor;
 import com.example.filmsociety.repositories.ActorsRepository;
 import com.example.filmsociety.services.ActorService;
 

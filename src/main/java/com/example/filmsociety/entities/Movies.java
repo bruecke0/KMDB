@@ -1,13 +1,9 @@
-package com.example.filmsociety.classes;
-
-import java.util.HashSet;
-import java.util.Set;
+package com.example.filmsociety.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 
