@@ -21,8 +21,8 @@ public class Actor {
 
     private LocalDate birthDate;
 
-    @ManyToMany(mappedBy = "actors")
-    private Set<Movies> movies = new HashSet<>();
+    /* @ManyToMany(mappedBy = "actors")
+    private Set<Movies> movies = new HashSet<>(); */
 
     public Actor() {}
 

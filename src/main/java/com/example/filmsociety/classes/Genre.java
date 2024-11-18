@@ -20,8 +20,8 @@ public class Genre {
 
     private String name;
 
-    @ManyToMany(mappedBy = "genres")
-    private Set<Movies> movies = new HashSet<>();
+    /* @ManyToMany(mappedBy = "genres")
+    private Set<Movies> movies = new HashSet<>(); */
 
     public Genre() {}
 
