@@ -44,4 +44,6 @@ public class MovieController {
         movieService.deleteMovies(id);
         return ResponseEntity.noContent().build();
     }
+
+    /* actors by movie id endpoint*/
 }
