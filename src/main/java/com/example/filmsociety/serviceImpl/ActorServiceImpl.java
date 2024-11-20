@@ -28,6 +28,11 @@ public class ActorServiceImpl implements ActorService {
     }
 
     @Override
+    public List<Actor> getActorByName (String name){
+        return actorsRepository.findByName(name);
+    }
+
+    @Override
     public List<Actor> findAllActors(){
         return actorsRepository.findAll();
     }

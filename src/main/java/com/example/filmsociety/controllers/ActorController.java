@@ -29,7 +29,10 @@ public class ActorController {
     }
 
     @GetMapping(path = "/api/actors")
-    public ResponseEntity<List<Actor>> findAllActors(@RequestParam String name) {
+    public ResponseEntity<List<Actor>> findAllActors(@RequestParam(required=false) String name) {
+        if (name != null) {
+            return ResponseEntity.ok(actorService.getActorByName(name));
+        }
         return ResponseEntity.ok(actorService.findAllActors());
     }
 
@@ -39,8 +42,8 @@ public class ActorController {
     }
 
     @PatchMapping(path = "/api/actors/{id}")
-    public ResponseEntity<Actor> updateActor(@PathVariable Long id, @RequestBody Actor updateActor) {
-        return ResponseEntity.ok(actorService.updateActor(id, updateActor));
+    public ResponseEntity<Actor> updateActor(@PathVariable Long id, @RequestBody Actor updatedActor) {
+        return ResponseEntity.ok(actorService.updateActor(id, updatedActor));
     }
 
     @DeleteMapping(path = "/api/actors/{id}")
