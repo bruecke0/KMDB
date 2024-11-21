@@ -10,35 +10,43 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.filmsociety.entities.Genre;
 import com.example.filmsociety.services.GenreService;
 
+@RestController
+@RequestMapping(path = "/api/genres")
 public class GenreController {
 
-    private GenreService genreService;
+    private final GenreService genreService;
 
-    @PostMapping (path = "/api/genres")
+    public GenreController(GenreService genreService) {
+        this.genreService = genreService;
+    }
+
+    @PostMapping 
     public ResponseEntity <Genre> createGenre (@RequestBody Genre genre) {
         return ResponseEntity.ok(genreService.createGenre(genre));
     }
 
-    @GetMapping (path = "/api/genres")
+    @GetMapping 
     public ResponseEntity <List <Genre>> findAllGenres () {
         return ResponseEntity.ok(genreService.findAllGenres());
     }
 
-    @GetMapping (path = "/api/genres/{id}")
+    @GetMapping (path = "/{id}")
     public ResponseEntity <Optional<Genre>> findGenreById (@PathVariable Long id) {
         return ResponseEntity.ok(genreService.findGenreById(id));
     }
 
-    @PatchMapping (path = "/api/genres/{id}")
+    @PatchMapping (path = "{id}")
     public ResponseEntity <Genre> updateGenre (@PathVariable Long id, @RequestBody Genre updatedGenre) {
         return ResponseEntity.ok(genreService.updateGenre(id, updatedGenre));
     }
 
-    @DeleteMapping (path = "/api/genres/{id}")
+    @DeleteMapping (path = "/{id}")
     public ResponseEntity <Void> deleteGenre (@PathVariable Long id) {
         genreService.deleteGenre(id);
         return ResponseEntity.noContent().build();

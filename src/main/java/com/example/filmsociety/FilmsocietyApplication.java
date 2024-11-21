@@ -12,7 +12,7 @@ public class FilmsocietyApplication {
 	public static void main(String[] args) {
 		
 		SpringApplication.run(FilmsocietyApplication.class, args);
-		System.out.println("lol");
+		/* System.out.println("lol"); */
 	}
 
 	@GetMapping
