@@ -10,36 +10,45 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.filmsociety.entities.Movies;
 import com.example.filmsociety.services.MovieService;
 
+
+@RestController
+@RequestMapping(path = "/api/movies")
 public class MovieController {
 
-    private MovieService movieService;
+    private final MovieService movieService;
 
-    @PostMapping (path = "/api/movies")
+    public MovieController (MovieService movieService){
+        this.movieService = movieService;
+    }
+
+    @PostMapping 
     public ResponseEntity <Movies> createMovies (@RequestBody Movies movies) {
         return ResponseEntity.ok(movieService.createMovies(movies));
     }
 
-    @GetMapping (path = "/api/movies")
+    @GetMapping 
     public ResponseEntity <List <Movies>> findAllMovies () {
         /* siia veel asju lisada */
         return ResponseEntity.ok(movieService.findAllMovies());
     }
 
-    @GetMapping (path = "/api/movies/{id}") 
+    @GetMapping (path = "/{id}") 
     public ResponseEntity <Optional <Movies>> findMoviesById (@PathVariable Long id) {
         return ResponseEntity.ok(movieService.findMoviesById(id));
     }
 
-    @PatchMapping (path = "/api/movies/{id}")
+    @PatchMapping (path = "/{id}")
     public ResponseEntity <Movies> updateMovies (@PathVariable Long id, @RequestBody Movies updatedMovies) {
         return ResponseEntity.ok(movieService.updateMovies(id, updatedMovies));
     }
 
-    @DeleteMapping (path = "/api/movies/{id}")
+    @DeleteMapping (path = "/{id}")
     public ResponseEntity <Void> deleteMovies (@PathVariable Long id) {
         movieService.deleteMovies(id);
         return ResponseEntity.noContent().build();

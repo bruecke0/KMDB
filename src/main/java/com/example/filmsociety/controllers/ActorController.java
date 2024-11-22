@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,16 +20,21 @@ import com.example.filmsociety.services.ActorService;
 
 
 @RestController
+@RequestMapping(path = "/api/actors")
 public class ActorController {
 
-    private ActorService actorService;
+    private final ActorService actorService;
 
-    @PostMapping(path = "/api/actors")
+    public ActorController(ActorService actorService){
+        this.actorService = actorService;
+    }
+
+    @PostMapping
     public ResponseEntity<Actor> createActor(@RequestBody Actor actor) {
         return ResponseEntity.ok(actorService.createActor(actor));
     }
 
-    @GetMapping(path = "/api/actors")
+    @GetMapping
     public ResponseEntity<List<Actor>> findAllActors(@RequestParam(required=false) String name) {
         if (name != null) {
             return ResponseEntity.ok(actorService.getActorByName(name));
@@ -36,17 +42,17 @@ public class ActorController {
         return ResponseEntity.ok(actorService.findAllActors());
     }
 
-    @GetMapping(path = "/api/actors/{id}")
+    @GetMapping(path = "/{id}")
     public ResponseEntity<Optional<Actor>> findActorById(@PathVariable Long id) {
         return ResponseEntity.ok(actorService.findActorById(id));
     }
 
-    @PatchMapping(path = "/api/actors/{id}")
+    @PatchMapping(path = "/{id}")
     public ResponseEntity<Actor> updateActor(@PathVariable Long id, @RequestBody Actor updatedActor) {
         return ResponseEntity.ok(actorService.updateActor(id, updatedActor));
     }
 
-    @DeleteMapping(path = "/api/actors/{id}")
+    @DeleteMapping(path = "/{id}")
     public ResponseEntity<Void> deleteActor(@PathVariable Long id) {
         actorService.deleteActor(id);
         return ResponseEntity.noContent().build();

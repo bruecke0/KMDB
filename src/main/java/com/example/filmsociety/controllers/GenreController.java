@@ -41,7 +41,7 @@ public class GenreController {
         return ResponseEntity.ok(genreService.findGenreById(id));
     }
 
-    @PatchMapping (path = "{id}")
+    @PatchMapping (path = "/{id}")
     public ResponseEntity <Genre> updateGenre (@PathVariable Long id, @RequestBody Genre updatedGenre) {
         return ResponseEntity.ok(genreService.updateGenre(id, updatedGenre));
     }

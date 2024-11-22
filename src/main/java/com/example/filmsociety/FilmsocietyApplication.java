@@ -2,11 +2,9 @@ package com.example.filmsociety;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
-@RestController
+/* @RestController */
 public class FilmsocietyApplication {
 
 	public static void main(String[] args) {
@@ -15,9 +13,9 @@ public class FilmsocietyApplication {
 		/* System.out.println("lol"); */
 	}
 
-	@GetMapping
+	/* @GetMapping
 	public String putsisOn(){
 		return "miks sa ei toota";
-	}
+	} */
 
 }
