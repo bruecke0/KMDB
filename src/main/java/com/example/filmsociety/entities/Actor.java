@@ -1,11 +1,14 @@
 package com.example.filmsociety.entities;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 
 @Entity
 public class Actor {
@@ -18,8 +21,8 @@ public class Actor {
 
     private LocalDate birthDate;
 
-    /* @ManyToMany(mappedBy = "actors")
-    private Set<Movies> movies = new HashSet<>(); */
+    @ManyToMany(mappedBy = "actors")
+    private Set<Movies> movies = new HashSet<>();
 
     public Actor() {}
 
@@ -28,6 +31,7 @@ public class Actor {
         this.birthDate = birthDate;
     }
 
+    //getters and setters
     public Long getId() {
         return id;
     }
@@ -50,5 +54,13 @@ public class Actor {
 
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public Set<Movies> getMovies() {
+        return movies;
+    }
+
+    public void setMovies(Set<Movies> movies) {
+        this.movies = movies;
     }
 }

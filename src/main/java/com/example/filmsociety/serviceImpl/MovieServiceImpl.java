@@ -33,6 +33,24 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
+    public List<Movies> findMoviesByGenreId(Long genreId){
+        /* if (!genreRepository.existsById(genreId)){
+            throw new ResourceNotFoundException("Genre with id" + genreId + "not found.");
+        } */
+        return movieRepository.findByGenresId(genreId);
+    }
+
+    @Override
+    public List<Movies> findMoviesByReleaseYear(Integer releaseYear){
+        return movieRepository.findByReleaseYear(releaseYear);
+    }
+
+    @Override
+    public List<Movies> findMoviesByActorId (Long actorId){
+        return movieRepository.findByActorId(actorId);
+    }
+
+    @Override
     public Movies updateMovies(Long id, Movies updatedMovies){
         return movieRepository.findById(id)
         .map((movies) -> {

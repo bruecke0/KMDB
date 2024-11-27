@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.filmsociety.entities.Movies;
@@ -33,8 +34,19 @@ public class MovieController {
     }
 
     @GetMapping 
-    public ResponseEntity <List <Movies>> findAllMovies () {
-        /* siia veel asju lisada */
+    public ResponseEntity <List <Movies>> findAllMovies (
+        @RequestParam(required = false) Long genre,
+        @RequestParam(required = false) Integer year, 
+        @RequestParam(required = false) Long actor ) {
+        
+        if (genre != null){
+            return ResponseEntity.ok(movieService.findMoviesByGenreId(genre));
+        } else if (year != null) {
+            return ResponseEntity.ok(movieService.findMoviesByReleaseYear(year));
+        } else if (actor != null) {
+            return ResponseEntity.ok(movieService.findMoviesByActorId(actor));
+        }
+        
         return ResponseEntity.ok(movieService.findAllMovies());
     }
 

@@ -1,9 +1,16 @@
 package com.example.filmsociety.entities;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 
@@ -21,8 +28,14 @@ public class Movies {
 
     private int duration;
 
-   /*  @ManyToMany(mappedBy = "movies")
-    private Set<Actor> actors = new HashSet<>(); */
+    @ManyToMany(fetch=FetchType.EAGER)
+    @JoinTable(
+        name = "movie_actor",
+        joinColumns = @JoinColumn(name = "movie_id"), 
+        inverseJoinColumns = @JoinColumn(name = "actor_id")
+    )
+
+    private Set<Actor> actors = new HashSet<>();
 
     public Movies() {}
 
@@ -32,6 +45,8 @@ public class Movies {
         this.duration = duration;
     }
 
+
+    //getters and setters
     public Long getId() {
         return id;
     }
@@ -62,6 +77,14 @@ public class Movies {
 
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+
+    public Set<Actor> getActors() {
+        return actors;
+    }
+
+    public void setActors(Set<Actor> actors) {
+        this.actors = actors;
     }
 
 

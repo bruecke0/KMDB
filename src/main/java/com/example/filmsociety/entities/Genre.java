@@ -19,6 +19,8 @@ public class Genre {
     /* @ManyToMany(mappedBy = "genres")
     private Set<Movies> movies = new HashSet<>(); */
 
+
+    //getters and setters
     public Genre() {}
 
     public Genre(String name) {
