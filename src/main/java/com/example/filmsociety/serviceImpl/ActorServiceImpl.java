@@ -29,7 +29,7 @@ public class ActorServiceImpl implements ActorService {
 
     @Override
     public List<Actor> getActorByName (String name){
-        return actorsRepository.findByName(name);
+        return actorsRepository.findByNameCaseInsensitive(name);
     }
 
     @Override

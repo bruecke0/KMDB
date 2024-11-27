@@ -1,9 +1,13 @@
 package com.example.filmsociety.entities;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,8 +20,8 @@ public class Genre {
 
     private String name;
 
-    /* @ManyToMany(mappedBy = "genres")
-    private Set<Movies> movies = new HashSet<>(); */
+    @ManyToMany(mappedBy = "genres")
+    private Set<Movies> movies = new HashSet<>();
 
 
     //getters and setters
@@ -43,5 +47,11 @@ public class Genre {
         this.name = name;
     }
 
+    public Set<Movies> getMovies() {
+        return movies;
+    }
 
+    public void setMovies(Set<Movies> movies) {
+        this.movies = movies;
+    }
 }

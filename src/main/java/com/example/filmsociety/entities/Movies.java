@@ -28,7 +28,15 @@ public class Movies {
 
     private int duration;
 
-    @ManyToMany(fetch=FetchType.EAGER)
+    @ManyToMany(fetch=FetchType.EAGER) //manytomany between movies and genres
+    @JoinTable(
+        name = "movie_genre",
+        joinColumns = @JoinColumn(name = "movie_id"),
+        inverseJoinColumns = @JoinColumn(name = "genre_id")
+    )
+    private Set<Genre> genres;
+
+    @ManyToMany(fetch=FetchType.EAGER) //manytomany between movies and actors
     @JoinTable(
         name = "movie_actor",
         joinColumns = @JoinColumn(name = "movie_id"), 
@@ -85,6 +93,10 @@ public class Movies {
 
     public void setActors(Set<Actor> actors) {
         this.actors = actors;
+    }
+
+    public Set<Genre> getGenres () {
+        return genres;
     }
 
 
