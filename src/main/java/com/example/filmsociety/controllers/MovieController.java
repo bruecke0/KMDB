@@ -18,6 +18,7 @@ import com.example.filmsociety.entities.Movies;
 import com.example.filmsociety.services.MovieService;
 
 
+
 @RestController
 @RequestMapping(path = "/api/movies")
 public class MovieController {
@@ -38,7 +39,7 @@ public class MovieController {
         @RequestParam(required = false) Long genre,
         @RequestParam(required = false) Integer year, 
         @RequestParam(required = false) Long actor ) {
-        
+
         if (genre != null){
             return ResponseEntity.ok(movieService.findMoviesByGenreId(genre));
         } else if (year != null) {

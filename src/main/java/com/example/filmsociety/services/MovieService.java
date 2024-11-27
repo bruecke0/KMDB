@@ -13,6 +13,6 @@ public interface MovieService {
     List<Movies> findMoviesByReleaseYear(Integer releaseYear);
     List<Movies> findMoviesByActorId(Long actorId);
     Movies updateMovies(Long id, Movies updatedMovies);
-    void deleteMovies(Long id);
+    void deleteMovies(Long id); 
 
 }

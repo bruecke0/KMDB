@@ -1,20 +1,24 @@
 package com.example.filmsociety.serviceImpl;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 import com.example.filmsociety.entities.Movies;
+import com.example.filmsociety.repositories.GenreRepository;
 import com.example.filmsociety.repositories.MovieRepository;
 import com.example.filmsociety.services.MovieService;
 
 @Service
 public class MovieServiceImpl implements MovieService {
     private final MovieRepository movieRepository;
+    private final GenreRepository genreRepository;
 
-    public MovieServiceImpl(MovieRepository movieRepository){
+    public MovieServiceImpl(MovieRepository movieRepository, GenreRepository genreRepository){
         this.movieRepository = movieRepository;
+        this.genreRepository = genreRepository;
     }
 
     @Override
@@ -34,20 +38,23 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public List<Movies> findMoviesByGenreId(Long genreId){
-        /* if (!genreRepository.existsById(genreId)){
-            throw new ResourceNotFoundException("Genre with id" + genreId + "not found.");
-        } */
-        return movieRepository.findByGenresId(genreId);
+        if (!genreRepository.existsById(genreId)){
+            throw new RuntimeException("Genre with id" + genreId + "not found."); //we'll see
+        }
+       List<Movies> movies = movieRepository.findByGenresId(genreId);
+        return movies.isEmpty() ? Collections.emptyList() : movies;  //if there are no movies in this genre, return empty list
     }
 
     @Override
     public List<Movies> findMoviesByReleaseYear(Integer releaseYear){
-        return movieRepository.findByReleaseYear(releaseYear);
+        List<Movies> movies = movieRepository.findByReleaseYear(releaseYear);
+        return movies.isEmpty() ? Collections.emptyList() : movies;
     }
 
     @Override
     public List<Movies> findMoviesByActorId (Long actorId){
-        return movieRepository.findByActorId(actorId);
+        List<Movies> movies = movieRepository.findByActorId(actorId);
+        return movies.isEmpty() ? Collections.emptyList() : movies;
     }
 
     @Override
