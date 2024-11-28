@@ -1,11 +1,13 @@
 package com.example.filmsociety.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.example.filmsociety.entities.Actor;
 import com.example.filmsociety.entities.Movies;
 import com.example.filmsociety.repositories.GenreRepository;
 import com.example.filmsociety.repositories.MovieRepository;
@@ -15,6 +17,7 @@ import com.example.filmsociety.services.MovieService;
 public class MovieServiceImpl implements MovieService {
     private final MovieRepository movieRepository;
     private final GenreRepository genreRepository;
+    
 
     public MovieServiceImpl(MovieRepository movieRepository, GenreRepository genreRepository){
         this.movieRepository = movieRepository;
@@ -55,6 +58,13 @@ public class MovieServiceImpl implements MovieService {
     public List<Movies> findMoviesByActorId (Long actorId){
         List<Movies> movies = movieRepository.findByActorId(actorId);
         return movies.isEmpty() ? Collections.emptyList() : movies;
+    }
+
+    @Override
+    public List<Actor> findActorsByMovieId (Long movieId){
+        Movies movie = movieRepository.findById(movieId)
+        .orElseThrow(() -> new RuntimeException("Movie with id " + movieId + " not found."));
+        return new ArrayList<>(movie.getActors());
     }
 
     @Override

@@ -10,6 +10,7 @@ public interface GenreService {
     Optional<Genre> findGenreById(Long id);
     List<Genre> findAllGenres();
     Genre updateGenre(Long id, Genre updatedGenre);
-    void deleteGenre(Long id);
+    void deleteGenre(Long id, boolean force);
+    
 
 }

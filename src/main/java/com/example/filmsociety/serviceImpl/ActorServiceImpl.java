@@ -6,15 +6,19 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.example.filmsociety.entities.Actor;
+import com.example.filmsociety.entities.Movies;
 import com.example.filmsociety.repositories.ActorsRepository;
+import com.example.filmsociety.repositories.MovieRepository;
 import com.example.filmsociety.services.ActorService;
 
 @Service
 public class ActorServiceImpl implements ActorService {
     private final ActorsRepository actorsRepository;
+    private final MovieRepository movieRepository;
 
-    public ActorServiceImpl(ActorsRepository actorsRepository){
+    public ActorServiceImpl(ActorsRepository actorsRepository, MovieRepository movieRepository){
         this.actorsRepository = actorsRepository;
+        this.movieRepository = movieRepository;
     }
 
     @Override
@@ -48,7 +52,20 @@ public class ActorServiceImpl implements ActorService {
     }
 
     @Override
-    public void deleteActor(Long id){
-        actorsRepository.deleteById(id);
+    public void deleteActor(Long id, boolean force){
+        Actor actor = actorsRepository.findById(id).orElseThrow(
+            () -> new RuntimeException("Actor with id " + id + " not found."));
+        if (actor.getMovies().isEmpty() || force) {
+            if (force) {
+                List<Movies> movies = movieRepository.findByActorId(id);
+                for (Movies movie : movies) {
+                    movie.getActors().remove(actor);
+                    movieRepository.save(movie);
+                }
+            }
+            actorsRepository.deleteById(id);
+        }else {
+            throw new RuntimeException("Cannot delete actor '" + actor.getName() + "' because they are associated with " + actor.getMovies().size() +" movies.");
+        }
     }
 }

@@ -6,17 +6,22 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.example.filmsociety.entities.Genre;
+import com.example.filmsociety.entities.Movies;
 import com.example.filmsociety.repositories.GenreRepository;
+import com.example.filmsociety.repositories.MovieRepository;
 import com.example.filmsociety.services.GenreService;
 
 
 @Service
 public class GenreServiceImpl implements GenreService {
     private final GenreRepository genreRepository;
+    private final MovieRepository movieRepository;
+
 
     
-    public GenreServiceImpl(GenreRepository genreRepository){
+    public GenreServiceImpl(GenreRepository genreRepository, MovieRepository movieRepository){
         this.genreRepository = genreRepository;
+        this.movieRepository = movieRepository;
     }
 
     @Override
@@ -43,9 +48,20 @@ public class GenreServiceImpl implements GenreService {
         })
         .orElseThrow(() -> new RuntimeException("Genre not found"));
     }
+
     @Override
-    public void deleteGenre(Long id){
+    public void deleteGenre(Long id, boolean force){
+        Genre genre = genreRepository.findById(id).orElseThrow(
+            () -> new RuntimeException("Genre with id " + id + " not found"));
+        if (force) {
+            List<Movies> movies = movieRepository.findByGenresId(id);
+            for (Movies movie : movies) {
+                movie.getGenres().remove(genre);
+                movieRepository.save(movie);
+            }
+        }else{
+            throw new RuntimeException("Cannot delete genre '" + genre.getName() + "' because it has " + genre.getMovies().size() + "associated movies.");
+        }
         genreRepository.deleteById(id);
     }
-
 }

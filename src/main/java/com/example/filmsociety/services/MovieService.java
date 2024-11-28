@@ -3,6 +3,7 @@ package com.example.filmsociety.services;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.filmsociety.entities.Actor;
 import com.example.filmsociety.entities.Movies;
 
 public interface MovieService {
@@ -12,6 +13,7 @@ public interface MovieService {
     List<Movies> findMoviesByGenreId(Long genreId);
     List<Movies> findMoviesByReleaseYear(Integer releaseYear);
     List<Movies> findMoviesByActorId(Long actorId);
+    List<Actor> findActorsByMovieId(Long movieId);
     Movies updateMovies(Long id, Movies updatedMovies);
     void deleteMovies(Long id); 
 

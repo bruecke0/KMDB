@@ -53,8 +53,8 @@ public class ActorController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<Void> deleteActor(@PathVariable Long id) {
-        actorService.deleteActor(id);
+    public ResponseEntity<Void> deleteActor(@PathVariable Long id, @RequestParam(required = false, defaultValue = "false") boolean force) {
+        actorService.deleteActor(id, force);
         return ResponseEntity.noContent().build();
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.filmsociety.entities.Genre;
@@ -47,8 +48,8 @@ public class GenreController {
     }
 
     @DeleteMapping (path = "/{id}")
-    public ResponseEntity <Void> deleteGenre (@PathVariable Long id) {
-        genreService.deleteGenre(id);
+    public ResponseEntity <Void> deleteGenre (@PathVariable Long id, @RequestParam(required = false, defaultValue = "false")boolean force) {
+        genreService.deleteGenre(id, force);
         return ResponseEntity.noContent().build();
     }
 
