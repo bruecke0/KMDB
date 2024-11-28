@@ -11,6 +11,8 @@ import com.example.filmsociety.repositories.ActorsRepository;
 import com.example.filmsociety.repositories.MovieRepository;
 import com.example.filmsociety.services.ActorService;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class ActorServiceImpl implements ActorService {
     private final ActorsRepository actorsRepository;
@@ -21,6 +23,7 @@ public class ActorServiceImpl implements ActorService {
         this.movieRepository = movieRepository;
     }
 
+    @Transactional
     @Override
     public Actor createActor(Actor actor){
         return actorsRepository.save(actor);
@@ -57,7 +60,7 @@ public class ActorServiceImpl implements ActorService {
             () -> new RuntimeException("Actor with id " + id + " not found."));
         if (actor.getMovies().isEmpty() || force) {
             if (force) {
-                List<Movies> movies = movieRepository.findByActorId(id);
+                List<Movies> movies = movieRepository.findByActorsId(id);
                 for (Movies movie : movies) {
                     movie.getActors().remove(actor);
                     movieRepository.save(movie);

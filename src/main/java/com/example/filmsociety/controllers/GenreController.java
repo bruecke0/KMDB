@@ -29,7 +29,8 @@ public class GenreController {
 
     @PostMapping 
     public ResponseEntity <Genre> createGenre (@RequestBody Genre genre) {
-        return ResponseEntity.ok(genreService.createGenre(genre));
+        Genre savedGenre = genreService.createGenre(genre);
+        return ResponseEntity.ok(savedGenre);
     }
 
     @GetMapping 

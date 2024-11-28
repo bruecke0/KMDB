@@ -13,6 +13,8 @@ import com.example.filmsociety.repositories.GenreRepository;
 import com.example.filmsociety.repositories.MovieRepository;
 import com.example.filmsociety.services.MovieService;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class MovieServiceImpl implements MovieService {
     private final MovieRepository movieRepository;
@@ -24,6 +26,8 @@ public class MovieServiceImpl implements MovieService {
         this.genreRepository = genreRepository;
     }
 
+
+    @Transactional
     @Override
     public Movies createMovies(Movies movies){
         return movieRepository.save(movies);
@@ -56,7 +60,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public List<Movies> findMoviesByActorId (Long actorId){
-        List<Movies> movies = movieRepository.findByActorId(actorId);
+        List<Movies> movies = movieRepository.findByActorsId(actorId);
         return movies.isEmpty() ? Collections.emptyList() : movies;
     }
 

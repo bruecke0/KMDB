@@ -15,7 +15,7 @@ public class Actor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long actorId;
 
     private String name;
 
@@ -33,11 +33,11 @@ public class Actor {
 
     //getters and setters
     public Long getId() {
-        return id;
+        return actorId;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.actorId = id;
     }
 
     public String getName() {

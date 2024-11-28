@@ -11,6 +11,8 @@ import com.example.filmsociety.repositories.GenreRepository;
 import com.example.filmsociety.repositories.MovieRepository;
 import com.example.filmsociety.services.GenreService;
 
+import jakarta.transaction.Transactional;
+
 
 @Service
 public class GenreServiceImpl implements GenreService {
@@ -24,8 +26,10 @@ public class GenreServiceImpl implements GenreService {
         this.movieRepository = movieRepository;
     }
 
+    @Transactional
     @Override
     public Genre createGenre(Genre genre){
+        System.out.println("Saving Genre: " + genre.getName());
         return genreRepository.save(genre);
     }
 
