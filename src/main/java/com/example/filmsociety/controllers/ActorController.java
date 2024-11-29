@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.filmsociety.entities.Actor;
 import com.example.filmsociety.services.ActorService;
 
+import jakarta.validation.Valid;
+
 
 
 @RestController
@@ -30,7 +32,7 @@ public class ActorController {
     }
 
     @PostMapping
-    public ResponseEntity<Actor> createActor(@RequestBody Actor actor) {
+    public ResponseEntity<Actor> createActor(@Valid @RequestBody Actor actor) {
         return ResponseEntity.ok(actorService.createActor(actor));
     }
 
@@ -48,7 +50,7 @@ public class ActorController {
     }
 
     @PatchMapping(path = "/{id}")
-    public ResponseEntity<Actor> updateActor(@PathVariable Long id, @RequestBody Actor updatedActor) {
+    public ResponseEntity<Actor> updateActor(@Valid @PathVariable Long id, @RequestBody Actor updatedActor) {
         return ResponseEntity.ok(actorService.updateActor(id, updatedActor));
     }
 

@@ -12,6 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 
 @Entity
@@ -22,6 +23,7 @@ public class Movies {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long movieId;
 
+    @NotNull
     private String title;
 
     private int releaseYear;

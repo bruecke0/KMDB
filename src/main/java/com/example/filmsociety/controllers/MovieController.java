@@ -3,7 +3,6 @@ package com.example.filmsociety.controllers;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +18,8 @@ import com.example.filmsociety.entities.Actor;
 import com.example.filmsociety.entities.Movies;
 import com.example.filmsociety.services.MovieService;
 
+import jakarta.validation.Valid;
+
 
 
 @RestController
@@ -32,7 +33,7 @@ public class MovieController {
     }
 
     @PostMapping 
-    public ResponseEntity <Movies> createMovies (@RequestBody Movies movies) {
+    public ResponseEntity <Movies> createMovies (@Valid @RequestBody Movies movies) {
         return ResponseEntity.ok(movieService.createMovies(movies));
     }
 
@@ -65,7 +66,7 @@ public class MovieController {
     }
 
     @PatchMapping (path = "/{id}")
-    public ResponseEntity <Movies> updateMovies (@PathVariable Long id, @RequestBody Movies updatedMovies) {
+    public ResponseEntity <Movies> updateMovies (@Valid @PathVariable Long id, @RequestBody Movies updatedMovies) {
         return ResponseEntity.ok(movieService.updateMovies(id, updatedMovies));
     }
 

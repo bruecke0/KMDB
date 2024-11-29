@@ -46,7 +46,7 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public List<Movies> findMoviesByGenreId(Long genreId){
         if (!genreRepository.existsById(genreId)){
-            throw new RuntimeException("Genre with id" + genreId + "not found."); //we'll see
+            throw new RuntimeException("Genre with id " + genreId + " not found."); //we'll see
         }
        List<Movies> movies = movieRepository.findByGenresId(genreId);
         return movies.isEmpty() ? Collections.emptyList() : movies;  //if there are no movies in this genre, return empty list

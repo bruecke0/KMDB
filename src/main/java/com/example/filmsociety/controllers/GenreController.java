@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.filmsociety.entities.Genre;
 import com.example.filmsociety.services.GenreService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping(path = "/api/genres")
 public class GenreController {
@@ -28,7 +30,7 @@ public class GenreController {
     }
 
     @PostMapping 
-    public ResponseEntity <Genre> createGenre (@RequestBody Genre genre) {
+    public ResponseEntity <Genre> createGenre (@Valid @RequestBody Genre genre) {
         Genre savedGenre = genreService.createGenre(genre);
         return ResponseEntity.ok(savedGenre);
     }
@@ -44,7 +46,7 @@ public class GenreController {
     }
 
     @PatchMapping (path = "/{id}")
-    public ResponseEntity <Genre> updateGenre (@PathVariable Long id, @RequestBody Genre updatedGenre) {
+    public ResponseEntity <Genre> updateGenre (@Valid @PathVariable Long id, @RequestBody Genre updatedGenre) {
         return ResponseEntity.ok(genreService.updateGenre(id, updatedGenre));
     }
 
