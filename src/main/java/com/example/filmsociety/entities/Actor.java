@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,7 +18,7 @@ public class Actor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long actorId;
+    private Long id;
 
     @NotNull
     private String name;
@@ -24,6 +26,7 @@ public class Actor {
     private LocalDate birthDate;
 
     @ManyToMany(mappedBy = "actors")
+    @JsonIgnore
     private Set<Movies> movies = new HashSet<>();
 
     public Actor() {}
@@ -35,11 +38,11 @@ public class Actor {
 
     //getters and setters
     public Long getId() {
-        return actorId;
+        return id;
     }
 
     public void setId(Long id) {
-        this.actorId = id;
+        this.id = id;
     }
 
     public String getName() {

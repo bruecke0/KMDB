@@ -3,6 +3,8 @@ package com.example.filmsociety.entities;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -21,7 +23,7 @@ public class Movies {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long movieId;
+    private Long id;
 
     @NotNull
     private String title;
@@ -37,14 +39,15 @@ public class Movies {
         inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
     private Set<Genre> genres;
-
+    
     @ManyToMany(fetch=FetchType.EAGER) //manytomany between movies and actors
     @JoinTable(
         name = "movie_actor",
         joinColumns = @JoinColumn(name = "movie_id"), 
         inverseJoinColumns = @JoinColumn(name = "actor_id")
-    )
-
+        )
+        
+    @JsonIgnore
     private Set<Actor> actors = new HashSet<>();
 
     public Movies() {}
@@ -58,11 +61,11 @@ public class Movies {
 
     //getters and setters
     public Long getId() {
-        return movieId;
+        return id;
     }
 
     public void setId(Long id) {
-        this.movieId = id;
+        this.id = id;
     }
 
     public String getName() {

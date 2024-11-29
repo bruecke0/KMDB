@@ -10,10 +10,10 @@ public interface MovieService {
     Movies createMovies (Movies movies);
     Optional<Movies> findMoviesById(Long id);
     List<Movies> findAllMovies();
-    List<Movies> findMoviesByGenreId(Long genreId);
+    List<Movies> findMoviesByGenreId(Long id);
     List<Movies> findMoviesByReleaseYear(Integer releaseYear);
-    List<Movies> findMoviesByActorId(Long actorId);
-    List<Actor> findActorsByMovieId(Long movieId);
+    List<Movies> findMoviesByActorId(Long id);
+    List<Actor> findActorsByMovieId(Long id);
     Movies updateMovies(Long id, Movies updatedMovies);
     void deleteMovies(Long id); 
 

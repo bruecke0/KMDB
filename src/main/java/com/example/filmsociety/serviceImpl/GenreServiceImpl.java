@@ -35,12 +35,23 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public Optional<Genre> findGenreById(Long id){
+        Optional<Genre> genre = genreRepository.findById(1L);
+        System.out.println("Fetched Genre: " + genre.map(Genre::getName).orElse("Not found"));
         return genreRepository.findById(id);
     }
 
     @Override
     public List<Genre> findAllGenres(){
-        return genreRepository.findAll();
+        /* return genreRepository.findAll(); */
+        List<Genre> genres = genreRepository.findAll();
+        for (Genre genre : genres) {
+            if (genre == null) {
+                System.out.println("Null genre object found.");
+            }else{
+            System.out.println("Genre ID: " + genre.getId() + ", Name: " + genre.getName());
+        }
+    }
+        return genres;
     }
 
     @Override

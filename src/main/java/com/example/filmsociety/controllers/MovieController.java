@@ -55,8 +55,8 @@ public class MovieController {
     }
 
     @GetMapping(path = "/{id}/actors")
-    public ResponseEntity <List<Actor>> findActorsByMovieId (@PathVariable Long movieId) {
-        return ResponseEntity.ok(movieService.findActorsByMovieId(movieId));
+    public ResponseEntity <List<Actor>> findActorsByMovieId (@PathVariable Long id) {
+        return ResponseEntity.ok(movieService.findActorsByMovieId(id));
     }
     
 
