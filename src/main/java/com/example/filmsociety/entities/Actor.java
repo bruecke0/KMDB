@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -27,7 +27,7 @@ public class Actor {
     private LocalDate birthDate;
 
     @ManyToMany(mappedBy = "actors", fetch=FetchType.EAGER)
-    @JsonIgnoreProperties({"actors", "genres"})
+    @JsonIgnore
     private Set<Movies> movies = new HashSet<>();
 
     public Actor() {}
