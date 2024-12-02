@@ -68,14 +68,14 @@ public class GenreServiceImpl implements GenreService {
     public void deleteGenre(Long id, boolean force){
         Genre genre = genreRepository.findById(id).orElseThrow(
             () -> new RuntimeException("Genre with id " + id + " not found"));
-        if (force) {
+        if (genre.getMovies().isEmpty() || force) {
             List<Movies> movies = movieRepository.findByGenresId(id);
             for (Movies movie : movies) {
                 movie.getGenres().remove(genre);
                 movieRepository.save(movie);
             }
         }else{
-            throw new RuntimeException("Cannot delete genre '" + genre.getName() + "' because it has " + genre.getMovies().size() + "associated movies.");
+            throw new RuntimeException("Cannot delete genre '" + genre.getName() + "' because it has " + genre.getMovies().size() + " associated movies.");
         }
         genreRepository.deleteById(id);
     }
