@@ -65,6 +65,7 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
+    @Transactional
     public void deleteGenre(Long id, boolean force){
         Genre genre = genreRepository.findById(id).orElseThrow(
             () -> new RuntimeException("Genre with id " + id + " not found"));
@@ -72,11 +73,11 @@ public class GenreServiceImpl implements GenreService {
             List<Movies> movies = movieRepository.findByGenresId(id);
             for (Movies movie : movies) {
                 movie.getGenres().remove(genre);
-                movieRepository.save(movie);
             }
+            movieRepository.saveAll(movies);
+            genreRepository.deleteById(id);
         }else{
             throw new RuntimeException("Cannot delete genre '" + genre.getName() + "' because it has " + genre.getMovies().size() + " associated movies.");
         }
-        genreRepository.deleteById(id);
     }
 }
