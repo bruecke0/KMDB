@@ -3,7 +3,7 @@ package com.example.filmsociety.entities;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -14,6 +14,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 
@@ -28,9 +29,11 @@ public class Movies {
     @NotNull
     private String title;
 
-    private int releaseYear;
+    @NotNull
+    private Integer releaseYear;
 
-    private int duration;
+    @NotNull
+    private Integer duration;
 
     @ManyToMany(fetch=FetchType.EAGER) //manytomany between movies and genres
     @JoinTable(
@@ -38,6 +41,7 @@ public class Movies {
         joinColumns = @JoinColumn(name = "movie_id"),
         inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
+    @NotEmpty
     private Set<Genre> genres;
     
     @ManyToMany(fetch=FetchType.EAGER) //manytomany between movies and actors
@@ -47,15 +51,17 @@ public class Movies {
         inverseJoinColumns = @JoinColumn(name = "actor_id")
         )
         
-    @JsonIgnore
+    @JsonIgnoreProperties("movies")
     private Set<Actor> actors = new HashSet<>();
 
     public Movies() {}
 
-    public Movies(String title, int releaseYear, int duration) {
+    public Movies(String title, Integer releaseYear, Integer duration, Set<Genre> genres, Set<Actor> actors) {
         this.title = title;
         this.releaseYear = releaseYear;
         this.duration = duration;
+        this.genres = genres;
+        this.actors = actors;
     }
 
 
@@ -68,11 +74,11 @@ public class Movies {
         this.id = id;
     }
 
-    public String getName() {
+    public String getTitle() {
         return title;
     }
 
-    public void setName(String title) {
+    public void setTitle(String title) {
         this.title = title;
     }
 
@@ -80,7 +86,7 @@ public class Movies {
         return releaseYear;
     }
 
-    public void setReleaseYear(int releaseYear) {
+    public void setReleaseYear(Integer releaseYear) {
         this.releaseYear = releaseYear;
     }
 
@@ -88,7 +94,7 @@ public class Movies {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(Integer duration) {
         this.duration = duration;
     }
 
@@ -104,5 +110,8 @@ public class Movies {
         return genres;
     }
 
+    public void setGenres(Set<Genre> genres) {
+        this.genres = genres;
+    }
 
 }

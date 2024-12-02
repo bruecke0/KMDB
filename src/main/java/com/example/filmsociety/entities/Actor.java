@@ -4,9 +4,10 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,15 +26,16 @@ public class Actor {
 
     private LocalDate birthDate;
 
-    @ManyToMany(mappedBy = "actors")
-    @JsonIgnore
+    @ManyToMany(mappedBy = "actors", fetch=FetchType.EAGER)
+    @JsonIgnoreProperties({"actors", "genres"})
     private Set<Movies> movies = new HashSet<>();
 
     public Actor() {}
 
-    public Actor(String name, LocalDate birthDate) {
+    public Actor(String name, LocalDate birthDate, Set<Movies> movies) {
         this.name = name;
         this.birthDate = birthDate;
+        this.movies = movies;
     }
 
     //getters and setters

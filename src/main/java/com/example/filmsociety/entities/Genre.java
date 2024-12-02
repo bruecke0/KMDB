@@ -1,11 +1,11 @@
 package com.example.filmsociety.entities;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,18 +24,19 @@ public class Genre {
     @NotNull
     private String name;
 
-    @ManyToMany(mappedBy = "genres")
+    @ManyToMany(mappedBy = "genres", fetch=FetchType.EAGER)
     @JsonIgnore
-    private Set<Movies> movies = new HashSet<>();
+    private Set<Movies> movies;
 
 
-    //getters and setters
     public Genre() {}
-
-    public Genre(String name) {
+    
+    public Genre(String name, Set<Movies> movies) {
         this.name = name;
+        this.movies = movies;
     }
-
+    
+    //getters and setters
     public Long getId() {
         return id;
     }

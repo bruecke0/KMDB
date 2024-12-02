@@ -49,6 +49,7 @@ public class ActorServiceImpl implements ActorService {
         return actorsRepository.findById(id)
         .map(actor -> {
             actor.setName(updatedActor.getName());
+            actor.setBirthDate(updatedActor.getBirthDate());
             return actorsRepository.save(actor);
         })
         .orElseThrow(() -> new RuntimeException("Actor not found"));
