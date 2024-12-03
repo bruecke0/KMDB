@@ -84,5 +84,5 @@ public class MovieController {
         return ResponseEntity.noContent().build();
     }
 
-    /* actors by movie id endpoint*/
+    
 }
