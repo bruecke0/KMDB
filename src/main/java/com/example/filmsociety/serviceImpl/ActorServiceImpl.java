@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.filmsociety.entities.Actor;
 import com.example.filmsociety.entities.Movies;
+import com.example.filmsociety.exceptions.ResourceNotFoundException;
 import com.example.filmsociety.repositories.ActorsRepository;
 import com.example.filmsociety.repositories.MovieRepository;
 import com.example.filmsociety.services.ActorService;
@@ -31,12 +32,17 @@ public class ActorServiceImpl implements ActorService {
 
     @Override
     public Optional<Actor> findActorById(Long id){
-        return actorsRepository.findById(id);
+        return Optional.ofNullable(actorsRepository.findById(id)
+        .orElseThrow (() -> new ResourceNotFoundException("Actor with id " + id + " not found.")));
     }
 
     @Override
     public List<Actor> getActorByName (String name){
-        return actorsRepository.findByNameCaseInsensitive(name);
+        List<Actor> actors = actorsRepository.findByNameCaseInsensitive(name);
+        if  (actors.isEmpty()) {
+            throw new ResourceNotFoundException("No actors found with name: " + name);
+        }
+        return actors;
     }
 
     @Override
@@ -52,13 +58,13 @@ public class ActorServiceImpl implements ActorService {
             actor.setBirthDate(updatedActor.getBirthDate());
             return actorsRepository.save(actor);
         })
-        .orElseThrow(() -> new RuntimeException("Actor not found"));
+        .orElseThrow(() -> new ResourceNotFoundException("Actor with id: " + id + " not found"));
     }
 
     @Override
     public void deleteActor(Long id, boolean force){
         Actor actor = actorsRepository.findById(id).orElseThrow(
-            () -> new RuntimeException("Actor with id " + id + " not found."));
+            () -> new ResourceNotFoundException("Actor with id " + id + " not found."));
         if (actor.getMovies().isEmpty() || force) {
             if (force) {
                 List<Movies> movies = movieRepository.findByActorsId(id);
@@ -69,7 +75,7 @@ public class ActorServiceImpl implements ActorService {
             }
             actorsRepository.deleteById(id);
         }else {
-            throw new RuntimeException("Cannot delete actor '" + actor.getName() + "' because they are associated with " + actor.getMovies().size() +" movies.");
+            throw new ResourceNotFoundException("Cannot delete actor '" + actor.getName() + "' because they are associated with " + actor.getMovies().size() +" movies.");
         }
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.filmsociety.entities.Genre;
 import com.example.filmsociety.entities.Movies;
+import com.example.filmsociety.exceptions.ResourceNotFoundException;
 import com.example.filmsociety.repositories.GenreRepository;
 import com.example.filmsociety.repositories.MovieRepository;
 import com.example.filmsociety.services.GenreService;
@@ -29,29 +30,18 @@ public class GenreServiceImpl implements GenreService {
     @Transactional
     @Override
     public Genre createGenre(Genre genre){
-        System.out.println("Saving Genre: " + genre.getName());
         return genreRepository.save(genre);
     }
 
     @Override
     public Optional<Genre> findGenreById(Long id){
-        Optional<Genre> genre = genreRepository.findById(1L);
-        System.out.println("Fetched Genre: " + genre.map(Genre::getName).orElse("Not found"));
-        return genreRepository.findById(id);
+        return Optional.ofNullable(genreRepository.findById(id)
+        .orElseThrow (() -> new ResourceNotFoundException("Genre with id " + id + " not found.")));
     }
 
     @Override
     public List<Genre> findAllGenres(){
-        /* return genreRepository.findAll(); */
-        List<Genre> genres = genreRepository.findAll();
-        for (Genre genre : genres) {
-            if (genre == null) {
-                System.out.println("Null genre object found.");
-            }else{
-            System.out.println("Genre ID: " + genre.getId() + ", Name: " + genre.getName());
-        }
-    }
-        return genres;
+        return genreRepository.findAll();
     }
 
     @Override
@@ -61,7 +51,7 @@ public class GenreServiceImpl implements GenreService {
             genre.setName(updatedGenre.getName());
             return genreRepository.save(genre);
         })
-        .orElseThrow(() -> new RuntimeException("Genre not found"));
+        .orElseThrow(() -> new ResourceNotFoundException("Genre with id: " + id + " not found"));
     }
 
     @Override
