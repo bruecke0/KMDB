@@ -62,8 +62,16 @@ public class MovieController {
 
     @GetMapping (path = "/{id}") 
     public ResponseEntity <Optional <Movies>> findMoviesById (@PathVariable Long id) {
-        return ResponseEntity.ok(movieService.findMoviesById(id));
+        Optional<Movies> movies = movieService.findMoviesById(id);
+        return ResponseEntity.ok(movies);
     }
+
+    @GetMapping(path = "/search")
+    public ResponseEntity <List<Movies>> findMoviesByMovieTitleContainingIgnoreCase(@RequestParam String title) {
+        List<Movies> movies = movieService.findMoviesByMovieTitleContainingIgnoreCase(title);
+        return ResponseEntity.ok(movies);
+    }
+    
 
     @PatchMapping (path = "/{id}")
     public ResponseEntity <Movies> updateMovies (@Valid @PathVariable Long id, @RequestBody Movies updatedMovies) {

@@ -15,6 +15,7 @@ public interface MovieService {
     List<Movies> findMoviesByActorId(Long id);
     List<Actor> findActorsByMovieId(Long id);
     Movies updateMovies(Long id, Movies updatedMovies);
-    void deleteMovies(Long id); 
+    void deleteMovies(Long id);
+    List<Movies> findMoviesByMovieTitleContainingIgnoreCase(String title); 
 
 }

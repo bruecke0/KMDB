@@ -92,9 +92,18 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public List<Actor> findActorsByMovieId (Long movieId){
-        Movies movie = movieRepository.findById(movieId)
+        Movies movies = movieRepository.findById(movieId)
         .orElseThrow(() -> new ResourceNotFoundException("Movie with id " + movieId + " not found."));
-        return new ArrayList<>(movie.getActors());
+        return new ArrayList<>(movies.getActors());
+    }
+
+    @Override
+    public List<Movies> findMoviesByMovieTitleContainingIgnoreCase (String title) {
+        List<Movies> movies = movieRepository.findByTitleContainingIgnoreCase(title);
+        if (movies.isEmpty()) {
+            throw new ResourceNotFoundException("Movie not in the database");
+        }
+        return movies;
     }
 
     @Override
