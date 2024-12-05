@@ -41,6 +41,8 @@ public class ActorController {
         @RequestParam(required=false) String name,
         @RequestParam(defaultValue = "0") int page, 
         @RequestParam(defaultValue = "10") int size ) {
+            final int maxPageSize = 200;
+            size = Math.min(size, maxPageSize);
         if (name != null) {
             return ResponseEntity.ok(actorService.getActorByName(name, page, size));
         }

@@ -39,6 +39,8 @@ public class GenreController {
     public ResponseEntity <Page <Genre>> findAllGenres (
         @RequestParam(defaultValue = "0") int page,
         @RequestParam(defaultValue = "10") int size ) {
+            final int maxPageSize = 200;
+            size = Math.min(size, maxPageSize);
         return ResponseEntity.ok(genreService.findAllGenres(page, size));
     }
 

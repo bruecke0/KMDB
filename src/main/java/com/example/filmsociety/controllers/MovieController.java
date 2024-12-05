@@ -45,6 +45,8 @@ public class MovieController {
         @RequestParam(required = false) Long genre,
         @RequestParam(required = false) Integer year, 
         @RequestParam(required = false) Long actor ) {
+            final int maxPageSize = 200;
+            size = Math.min(size, maxPageSize);
 
         if (genre != null){
             return ResponseEntity.ok(movieService.findMoviesByGenreId(genre, page, size));
