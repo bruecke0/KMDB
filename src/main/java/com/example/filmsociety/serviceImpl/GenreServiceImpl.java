@@ -3,6 +3,8 @@ package com.example.filmsociety.serviceImpl;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -41,8 +43,8 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public List<Genre> findAllGenres(){
-        return genreRepository.findAll();
+    public Page<Genre> findAllGenres(int page, int size){
+        return genreRepository.findAll(PageRequest.of(page, size));
     }
 
     @Override

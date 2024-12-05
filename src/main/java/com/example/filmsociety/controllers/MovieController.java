@@ -40,7 +40,7 @@ public class MovieController {
 
     @GetMapping 
     public ResponseEntity <Page <Movies>> findAllMovies (
-        @RequestParam(defaultValue = "1") int page,
+        @RequestParam(defaultValue = "0") int page,
         @RequestParam(defaultValue = "10") int size,
         @RequestParam(required = false) Long genre,
         @RequestParam(required = false) Integer year, 

@@ -1,8 +1,8 @@
 package com.example.filmsociety.controllers;
 
-import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,8 +36,10 @@ public class GenreController {
     }
 
     @GetMapping 
-    public ResponseEntity <List <Genre>> findAllGenres () {
-        return ResponseEntity.ok(genreService.findAllGenres());
+    public ResponseEntity <Page <Genre>> findAllGenres (
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int size ) {
+        return ResponseEntity.ok(genreService.findAllGenres(page, size));
     }
 
     @GetMapping (path = "/{id}")
