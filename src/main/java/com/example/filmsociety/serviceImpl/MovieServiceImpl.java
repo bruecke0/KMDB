@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.example.filmsociety.entities.Actor;
@@ -59,13 +61,13 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public List<Movies> findAllMovies(){
-        return movieRepository.findAll();
+    public Page<Movies> findAllMovies(int page, int size){
+        return movieRepository.findAll(PageRequest.of(page, size));
     }
 
     @Override
-    public List<Movies> findMoviesByGenreId(Long genreId){
-        List <Movies> movies = movieRepository.findByGenresId(genreId);
+    public Page<Movies> findMoviesByGenreId(Long genreId, int page, int size){
+        Page <Movies> movies = movieRepository.findByGenresId(genreId, PageRequest.of(page, size));
         if (movies.isEmpty()) {
             throw new ResourceNotFoundException("No movies found with genre id: " + genreId);
         }
@@ -73,8 +75,8 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public List<Movies> findMoviesByReleaseYear(Integer releaseYear){
-        List<Movies> movies = movieRepository.findByReleaseYear(releaseYear);
+    public Page<Movies> findMoviesByReleaseYear(Integer releaseYear, int page, int size){
+        Page<Movies> movies = movieRepository.findByReleaseYear(releaseYear, PageRequest.of(page, size));
         if (movies.isEmpty()) {
             throw new ResourceNotFoundException("No movies found with the release year: " + releaseYear);
         }
@@ -82,8 +84,8 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public List<Movies> findMoviesByActorId (Long actorId){
-        List<Movies> movies = movieRepository.findByActorsId(actorId);
+    public Page<Movies> findMoviesByActorId (Long actorId, int page, int size){
+        Page<Movies> movies = movieRepository.findByActorsId(actorId, PageRequest.of(page, size));
         if (movies.isEmpty()) {
             throw new ResourceNotFoundException("No movies found with actor id: " + actorId);
         }

@@ -3,6 +3,7 @@ package com.example.filmsociety.serviceImpl;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.filmsociety.entities.Actor;
@@ -67,7 +68,7 @@ public class ActorServiceImpl implements ActorService {
             () -> new ResourceNotFoundException("Actor with id " + id + " not found."));
         if (actor.getMovies().isEmpty() || force) {
             if (force) {
-                List<Movies> movies = movieRepository.findByActorsId(id);
+                List<Movies> movies = movieRepository.findByActorsId(id, Pageable.unpaged()).getContent();// for cases where you want all results without limiting the number of items
                 for (Movies movie : movies) {
                     movie.getActors().remove(actor);
                     movieRepository.save(movie);

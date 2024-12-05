@@ -3,6 +3,7 @@ package com.example.filmsociety.serviceImpl;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.filmsociety.entities.Genre;
@@ -60,7 +61,7 @@ public class GenreServiceImpl implements GenreService {
         Genre genre = genreRepository.findById(id).orElseThrow(
             () -> new RuntimeException("Genre with id " + id + " not found"));
         if (genre.getMovies().isEmpty() || force) {
-            List<Movies> movies = movieRepository.findByGenresId(id);
+            List<Movies> movies = movieRepository.findByGenresId(id, Pageable.unpaged()).getContent(); // for cases where you want all results without limiting the number of items
             for (Movies movie : movies) {
                 movie.getGenres().remove(genre);
             }

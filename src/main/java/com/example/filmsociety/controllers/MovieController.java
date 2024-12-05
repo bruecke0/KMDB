@@ -3,6 +3,7 @@ package com.example.filmsociety.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,20 +39,22 @@ public class MovieController {
     }
 
     @GetMapping 
-    public ResponseEntity <List <Movies>> findAllMovies (
+    public ResponseEntity <Page <Movies>> findAllMovies (
+        @RequestParam(defaultValue = "1") int page,
+        @RequestParam(defaultValue = "10") int size,
         @RequestParam(required = false) Long genre,
         @RequestParam(required = false) Integer year, 
         @RequestParam(required = false) Long actor ) {
 
         if (genre != null){
-            return ResponseEntity.ok(movieService.findMoviesByGenreId(genre));
+            return ResponseEntity.ok(movieService.findMoviesByGenreId(genre, page, size));
         } else if (year != null) {
-            return ResponseEntity.ok(movieService.findMoviesByReleaseYear(year));
+            return ResponseEntity.ok(movieService.findMoviesByReleaseYear(year, page, size));
         } else if (actor != null) {
-            return ResponseEntity.ok(movieService.findMoviesByActorId(actor));
+            return ResponseEntity.ok(movieService.findMoviesByActorId(actor, page, size));
         }
         
-        return ResponseEntity.ok(movieService.findAllMovies());
+        return ResponseEntity.ok(movieService.findAllMovies(page, size));
     }
 
     @GetMapping(path = "/{id}/actors")
