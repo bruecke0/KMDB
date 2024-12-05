@@ -3,6 +3,8 @@ package com.example.filmsociety.serviceImpl;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -38,8 +40,8 @@ public class ActorServiceImpl implements ActorService {
     }
 
     @Override
-    public List<Actor> getActorByName (String name){
-        List<Actor> actors = actorsRepository.findByNameCaseInsensitive(name);
+    public Page<Actor> getActorByName (String name, int page, int size){
+        Page<Actor> actors = actorsRepository.findByNameCaseInsensitive(name, PageRequest.of(page, size));
         if  (actors.isEmpty()) {
             throw new ResourceNotFoundException("No actors found with name: " + name);
         }
@@ -47,8 +49,8 @@ public class ActorServiceImpl implements ActorService {
     }
 
     @Override
-    public List<Actor> findAllActors(){
-        return actorsRepository.findAll();
+    public Page<Actor> findAllActors(int page, int size){
+        return actorsRepository.findAll(PageRequest.of(page, size));
     }
 
     @Override

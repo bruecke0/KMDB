@@ -1,8 +1,8 @@
 package com.example.filmsociety.controllers;
 
-import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,11 +37,14 @@ public class ActorController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Actor>> findAllActors(@RequestParam(required=false) String name) {
+    public ResponseEntity<Page<Actor>> findAllActors(
+        @RequestParam(required=false) String name,
+        @RequestParam(defaultValue = "0") int page, 
+        @RequestParam(defaultValue = "10") int size ) {
         if (name != null) {
-            return ResponseEntity.ok(actorService.getActorByName(name));
+            return ResponseEntity.ok(actorService.getActorByName(name, page, size));
         }
-        return ResponseEntity.ok(actorService.findAllActors());
+        return ResponseEntity.ok(actorService.findAllActors(page, size));
     }
 
     @GetMapping(path = "/{id}")
