@@ -51,9 +51,14 @@ cd kmdb
 - Build and Run:
 
 ```bash
-
 mvn clean install
-mvn spring-boot:run
+mvn spring-boot:start
+```
+
+- Exit with:
+
+```bash
+mvn spring-boot:stop
 ```
 - Access the API:
 
