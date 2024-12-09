@@ -115,6 +115,8 @@ public class MovieServiceImpl implements MovieService {
             movies.setTitle(updatedMovies.getTitle());
             movies.setReleaseYear(updatedMovies.getReleaseYear());
             movies.setDuration(updatedMovies.getDuration());
+            movies.setActors(updatedMovies.getActors());
+            movies.setGenres(updatedMovies.getGenres());
             return movieRepository.save(movies);
         })
         .orElseThrow(() -> new ResourceNotFoundException("Movie not found"));

@@ -3,6 +3,7 @@ package com.example.filmsociety.controllers;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +34,8 @@ public class ActorController {
 
     @PostMapping
     public ResponseEntity<Actor> createActor(@Valid @RequestBody Actor actor) {
-        return ResponseEntity.ok(actorService.createActor(actor));
+        Actor savedActor = actorService.createActor(actor);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedActor);
     }
 
     @GetMapping

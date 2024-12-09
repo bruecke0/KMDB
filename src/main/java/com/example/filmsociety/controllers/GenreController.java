@@ -3,6 +3,7 @@ package com.example.filmsociety.controllers;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +33,7 @@ public class GenreController {
     @PostMapping 
     public ResponseEntity <Genre> createGenre (@Valid @RequestBody Genre genre) {
         Genre savedGenre = genreService.createGenre(genre);
-        return ResponseEntity.ok(savedGenre);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedGenre);
     }
 
     @GetMapping 

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.filmsociety.entities.Actor;
+import com.example.filmsociety.entities.Genre;
 import com.example.filmsociety.entities.Movies;
 import com.example.filmsociety.services.MovieService;
 
@@ -35,7 +37,8 @@ public class MovieController {
 
     @PostMapping 
     public ResponseEntity <Movies> createMovies (@Valid @RequestBody Movies movies) {
-        return ResponseEntity.ok(movieService.createMovies(movies));
+        Movies savedMovie = movieService.createMovies(movies);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedMovie);
     }
 
     @GetMapping 

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
@@ -23,7 +24,9 @@ public class Actor {
 
     @NotNull
     private String name;
-
+    
+    @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
 
     @ManyToMany(mappedBy = "actors", fetch=FetchType.EAGER)
